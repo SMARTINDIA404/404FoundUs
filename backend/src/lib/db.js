@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
-
+import dotenv from 'dotenv';
+dotenv.config();
 const DbConnect=async()=>{
     
     try {
-        const connection=await mongoose.connect('mongodb+srv://nishithcbit_db_user:j3bnH0NdIPwNIrH4@cluster0.iuvocao.mongodb.net/VEDA?retryWrites=true&w=majority&appName=Cluster0')
+        const connection=await mongoose.connect(process.env.MONGODB_URL)
         console.log(`MongoDB connected: ${connection.connection.host}`);
     } catch (error) {
     console.error("MongoDB connection error:", error);

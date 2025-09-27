@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const API_URL=import.meta.env.VITE_API;
 import {
   PlayCircle,
   Video as VideoIcon,
@@ -83,7 +84,7 @@ export default function Student() {
       try {
         let backendVideos = [];
         if (isOnline) {
-          const res = await axios.get("http://localhost:3000/api/lectures");
+          const res = await axios.get(`${API_URL}/lectures`);
           backendVideos = (res.data.data || []).map((v) => ({
             id: v._id || v.id,
             title: v.title,

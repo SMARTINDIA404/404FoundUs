@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Video, Upload, PlayCircle } from "lucide-react";
-
+const API_URL=import.meta.env.VITE_API;
 export default function TeacherPage() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
@@ -28,7 +28,7 @@ export default function TeacherPage() {
     formData.append("video", videoFile);
 
     try {
-      const response = await fetch("http://localhost:3000/api/lectures", {
+      const response = await fetch(`${API_URL}/lectures`, {
         method: "POST",
         body: formData,
         credentials: "include",

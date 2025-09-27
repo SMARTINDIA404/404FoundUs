@@ -1,8 +1,8 @@
 import React, { use, useEffect } from "react";
 
+const API_URL=import.meta.env.VITE_API;
 const Admin = () => {
   const [lectures, setLectures] = React.useState([]);
-
   const Students=[
     {name:"student",downloaded:"20MB"}
     ,{name:"stu",downloaded:"10MB"},{name:"student2",downloaded:"1.7MB"}
@@ -14,7 +14,8 @@ const Admin = () => {
   ]
 
   const fetchData = async () => {
-    const response = await fetch("http://localhost:3000/api/lectures");
+    console.log(API_URL);
+    const response = await fetch(`${API_URL}/lectures`);
     const data = await response.json();
     console.log(data);
     setLectures(data.data);
