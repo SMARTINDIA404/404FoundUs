@@ -2,9 +2,15 @@
 import { create } from "zustand";
 import axios from "axios";
 
-// const BASE_URL = "http://localhost:3000";
-const API_URL=import.meta.env.VITE_API;
-console.log("API URL:", import.meta.env.VITE_API);
+// Use VITE_API if available, else fallback to localhost
+const API_URL = import.meta.env.VITE_API || "http://localhost:3000";
+console.log("API URL being used:", API_URL);
+
+// Create Axios instance to avoid repeating URL/credentials
+const api = axios.create({
+  baseURL: API_URL,
+  withCredentials: true, // include cookies automatically
+});
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -15,13 +21,12 @@ export const useAuthStore = create((set, get) => ({
   onlineUsers: [],
 
   checkAuth: async () => {
+    set({ isCheckingAuth: true });
     try {
-      const res = await axios.get(`${API_URL}/user/check`, {
-        withCredentials: true, // include cookies if needed
-      });
+      const res = await api.get("/user/check");
       set({ authUser: res.data });
     } catch (error) {
-      console.log("Error in checkAuth:", error);
+      console.log("Error in checkAuth:", error.response?.data || error.message);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -31,29 +36,23 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
-      const res = await axios.post(`${API_URL}/user/login`, data, {
-        withCredentials: true,
-      });
+      const res = await api.post("/user/login", data);
       set({ authUser: res.data });
       return res.data; // return user to handle navigation in component
     } catch (error) {
-      console.log(error);
-      console.log(error.data)
-      throw error; // rethrow so component can catch
+      console.log("Login error:", error.response?.data || error.message);
+      throw error;
     } finally {
       set({ isLoggingIn: false });
     }
   },
+
   logout: async () => {
     try {
-      await axios.post(
-        `${API_URL}/user/logout`,
-        {},
-        { withCredentials: true }
-      );
+      await api.post("/user/logout");
       set({ authUser: null });
     } catch (error) {
-      console.log("Error in logout:", error);
+      console.log("Logout error:", error.response?.data || error.message);
     }
-  }
+  },
 }));
