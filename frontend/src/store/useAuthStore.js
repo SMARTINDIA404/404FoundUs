@@ -19,7 +19,7 @@ export const useAuthStore = create((set, get) => ({
       });
       set({ authUser: res.data });
     } catch (error) {
-      // console.log("Error in checkAuth:", error);
+      console.log("Error in checkAuth:", error);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -36,6 +36,7 @@ export const useAuthStore = create((set, get) => ({
       return res.data; // return user to handle navigation in component
     } catch (error) {
       console.log(error);
+      console.log(error.data)
       throw error; // rethrow so component can catch
     } finally {
       set({ isLoggingIn: false });
