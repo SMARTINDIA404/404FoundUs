@@ -4,6 +4,8 @@ import axios from "axios";
 
 // const BASE_URL = "http://localhost:3000";
 const API_URL=import.meta.env.VITE_API;
+console.log("API URL:", import.meta.env.VITE_API);
+
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSigningUp: false,
