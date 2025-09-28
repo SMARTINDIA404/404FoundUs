@@ -3,7 +3,8 @@ import { create } from "zustand";
 import axios from "axios";
 
 // Use VITE_API if available, else fallback to localhost
-const API_URL = import.meta.env.VITE_API || "http://localhost:3000";
+// const API_URL = import.meta.env.VITE_API || "http://localhost:3000";
+const API_URL = "https://four04foundus-7gpg.onrender.com/api";
 console.log("API URL being used:", API_URL);
 
 // Create Axios instance to avoid repeating URL/credentials
