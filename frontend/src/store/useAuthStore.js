@@ -8,7 +8,7 @@ console.log("API URL being used:", API_URL);
 
 // Create Axios instance to avoid repeating URL/credentials
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api`,
   withCredentials: true, // include cookies automatically
 });
 
