@@ -2,8 +2,8 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000";
-
+// const BASE_URL = "http://localhost:3000";
+const API_URL=import.meta.env.VITE_API;
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSigningUp: false,
@@ -14,7 +14,7 @@ export const useAuthStore = create((set, get) => ({
 
   checkAuth: async () => {
     try {
-      const res = await axios.get(BASE_URL + "/api/user/check", {
+      const res = await axios.get(`${API_URL}/user/check`, {
         withCredentials: true, // include cookies if needed
       });
       set({ authUser: res.data });
@@ -29,7 +29,7 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
-      const res = await axios.post(BASE_URL + "/api/user/login", data, {
+      const res = await axios.post(`${API_URL}/user/login`, data, {
         withCredentials: true,
       });
       set({ authUser: res.data });
@@ -44,7 +44,7 @@ export const useAuthStore = create((set, get) => ({
   logout: async () => {
     try {
       await axios.post(
-        BASE_URL + "/api/user/logout",
+        `${API_URL}/user/logout`,
         {},
         { withCredentials: true }
       );
